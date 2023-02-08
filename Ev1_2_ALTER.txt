@@ -1,0 +1,60 @@
+MySQL  localhost:3306 ssl  evaluacion_1  SQL > create table empleados
+                                             -> (id int, nombre varchar(50),
+                                             -> apellido varchar(50),
+                                             -> fecha_nacimiento datetime,
+                                             -> rfc varchar(50),
+                                             -> ciudad_nacimiento text,
+                                             -> estado int,
+                                             -> numero_tel varchar(50));
+Query OK, 0 rows affected (0.2137 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > show tables;
++------------------------+
+| Tables_in_evaluacion_1 |
++------------------------+
+| empleados              |
+| primer_tabla           |
++------------------------+
+2 rows in set (0.0032 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > desc empleados;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| id                | int         | YES  |     | NULL    |       |
+| nombre            | varchar(50) | YES  |     | NULL    |       |
+| apellido          | varchar(50) | YES  |     | NULL    |       |
+| fecha_nacimiento  | datetime    | YES  |     | NULL    |       |
+| rfc               | varchar(50) | YES  |     | NULL    |       |
+| ciudad_nacimiento | text        | YES  |     | NULL    |       |
+| estado            | int         | YES  |     | NULL    |       |
+| numero_tel        | varchar(50) | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.0044 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > alter table empleados
+                                             -> add column nss varchar(20) after rfc,
+                                             -> add column pais varchar(10) after estado,
+                                             -> rename column numero_tel to celular,
+                                             -> add column tel_fijo varchar(50),
+                                             -> add column id_depto int after id,
+                                             -> add column iniciales varchar(10) after apellido;
+Query OK, 0 rows affected (0.1122 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > desc empleados;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| id                | int         | YES  |     | NULL    |       |
+| id_depto          | int         | YES  |     | NULL    |       |
+| nombre            | varchar(50) | YES  |     | NULL    |       |
+| apellido          | varchar(50) | YES  |     | NULL    |       |
+| iniciales         | varchar(10) | YES  |     | NULL    |       |
+| fecha_nacimiento  | datetime    | YES  |     | NULL    |       |
+| rfc               | varchar(50) | YES  |     | NULL    |       |
+| nss               | varchar(20) | YES  |     | NULL    |       |
+| ciudad_nacimiento | text        | YES  |     | NULL    |       |
+| estado            | int         | YES  |     | NULL    |       |
+| pais              | varchar(10) | YES  |     | NULL    |       |
+| celular           | varchar(50) | YES  |     | NULL    |       |
+| tel_fijo          | varchar(50) | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+13 rows in set (0.0033 sec)
