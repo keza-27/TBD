@@ -1,0 +1,69 @@
+BASE DE DATOS credit_cards
+TABLA bank
+Creación
+	create table bank(
+	id int auto_increment key,
+	name varchar(50) not null);
+Llenado de datos
+	insert into bank (name) values 
+	('Citybank');
+	(Se repite con los demás datos)
+TABLA card_data
+Creación
+	create table card_data(
+	number varchar(50) key,
+	CVV int not null,
+	issue_date int not null,
+	expiry_date int not null,
+	billing_date int not null,
+	PIN int not null);
+Llenado de datos
+	insert into card_data (number, CVV, issue_date, expiry_date, billing_date, PIN) values (
+	'340383198517962 ', 
+	'7758 ', 
+	'42583 ', 
+	'46600 ', 
+	'23 ', 
+	'6065 ');
+	(Se repite con los demás datos);
+TABLA card_type
+Creación
+	create table card_type(
+	id_type int auto_increment key,
+	type varchar(50) not null);
+Llenado de datos
+	inser into card_type (type) values
+	('American Express');
+	(Se repite con los demás datos)
+TABLA customer
+Creación
+	create table customer(
+	id_customer int auto_increment key,
+	name varchar(50) not null,
+	last_name varchar(50) not null,
+	card_number varchar(50) not null,
+	credit_limit int not null);
+Llenado de datos
+	insert into customer (name, last_name, card_number, credit_limit) values ( 
+	'Karly ', 
+	'Soria ', 
+	'340383198517962 ', 
+	'27700 ');
+Usuarios y privilegios
+Creación
+	create user usuario1 identified by 'password1';
+	create user usuario2 identified by 'password2';
+	create user usuario3 identified by 'password3';
+	create user usuario4 identified by 'password4';
+	create user usuario5 identified by 'password5';
+Asignación de privilegios
+	grant select on bank to usuario1;
+	grant select, insert, update on card_type to usuario2;
+	grant select, delete on card_data to usuario3;
+	grant select, insert, update, delete on customer to usuario4;
+	grant select, insert, update, delete on bank to usuario5;
+	grant select, insert, update, delete on card_type to usuario5;
+	grant select, insert, update, delete on card_data to usuario5;
+	grant select, insert, update, delete on customer to usuario5;
+Eplicación
+	El usuario1 tiene permisos SELECT en la tabla "bank", el usuario2 tiene permisos SELECT, INSERT y UPDATE en la tabla "card_type", el usuario3 tiene permisos 	SELECT y DELETE en la tabla "card_data", el usuario4 tiene permisos SELECT, INSERT, UPDATE y DELETE en la tabla "customer" y el usuario5 tiene permisos SELECT, 	INSERT, UPDATE y DELETE en todas las tablas
