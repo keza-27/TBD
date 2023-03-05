@@ -1,0 +1,84 @@
+BASE DE DATOS ORDERS
+TABLA customer
+Creación
+	create table customer (
+	customer_id varchar(50) key, 
+	name varchar(50) not null,
+	last_name varchar(50) not null, 
+	country varchar(50) not null, 
+	city varchar(50) not null, 
+	state varchar(50) not null, 
+	postal_code int not null, 
+	region varchar(50) not null);
+Llenado de datos
+	insert into customer (customer_id, name, last_name, country, city, state, postal_code, region) values(
+	'CA-2016-152156',
+	'Claire',
+	'Gute',
+	'United States',
+	'Henderson',
+	'Kentucky',
+	'42420',
+	'South');
+	(se repite con los demás datos)
+
+TABLA product
+Creación
+	create table product (
+	product_id varchar(50) key, 
+	name varchar(150) not null, 
+	category varchar(50) not null, 
+	sub_category varchar(50) not null);
+Llenado de datos
+	insert into product (product_id, name, category, sub_category) values(
+	'FUR-BO-10001798',
+	'Bush Somerset Collection Bookcase',
+	'Furniture',
+	'Bookcases');
+	(se repite con los demás datos)
+TABLA order
+Creación
+	create table order(
+	order_id varchar(50) key, 
+	order_date varchar(50) not null, 
+	ship_date varchar(50) not null, 
+	ship_mode varchar(50) not null, 
+	customer_id varchar(50) not null, 
+	segment varchar(50) not null, 
+	product_id varchar(50) not null, 
+	sales int not null, 
+	quantity int not null, 
+	discount int not null, 
+	profit int not null);
+Llenado de datos
+	insert into torder  (order_id, order_date, ship_date, ship_mode, customer_id, segment, product_id, sales, quantity, discount, profit) values(
+	'CA-2016-152156',
+	'42682',
+	'42685',
+	'Second Class',
+	'CG_12520',
+	'Consumer',
+	'FUR-BO-10001798',
+	'261.96',
+	'2',
+	'0',
+	'41.9136');
+	(se repite con los demás datos)
+Usuarios y privilegios
+Creación
+	create user 'usuario1'@'localhost' identified by 'password1';
+	create user 'usuario2'@'localhost' identified by 'password2';
+	create user 'usuario3'@'localhost' identified by 'password3';
+	create user 'usuario4'@'localhost' identified by 'password4';
+	create user 'usuario5'@'localhost' identified by 'password5';
+Asignación de privilegios
+	grant select on orders.customer to 'usuario1'@'localhost';
+	grant select, update on orders.product to 'usuario2'@'localhost';
+	grant select, insert on orders.order to 'usuario3'@'localhost';
+	grant select, update, insert on orders.customer to 'usuario4'@'localhost';
+	grant select, update, insert on orders.product to 'usuario4'@'localhost';
+	grant select, update, insert on orders.order to 'usuario4'@'localhost';
+	grant all privileges on orders.* to 'usuario5'@'localhost';
+Explicación
+	El usuario1 solo tiene permiso para SELECT en la tabla customer, el usuario2 tiene permiso para SELECT y UPDATE en la tabla product, el usuario3 tiene permiso 		para SELECT e INSERT en la tabla torder, el usuario4 tiene permiso para SELECT, UPDATE e INSERT en todas las tablas y el usuario5 tiene todos los permisos.
+
