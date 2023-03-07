@@ -1,0 +1,272 @@
+MySQL Shell 8.0.31
+
+Copyright (c) 2016, 2022, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \help
+The Shell Help is organized in categories and topics. To get help for a
+specific category or topic use: \? <pattern>
+
+The <pattern> argument should be the name of a category or a topic.
+
+The pattern is a filter to identify topics for which help is required, it can
+use the following wildcards:
+
+- ? matches any single character.
+- * matches any character sequence.
+
+The following are the main help categories:
+
+ - AdminAPI       The AdminAPI is an API that enables configuring and managing
+                  InnoDB Clusters, ReplicaSets, ClusterSets, among other
+                  things.
+ - Shell Commands Provides details about the available built-in shell commands.
+ - ShellAPI       Contains information about the shell and util global objects
+                  as well as the mysql module that enables executing SQL on
+                  MySQL Servers.
+ - SQL Syntax     Entry point to retrieve syntax help on SQL statements.
+ - X DevAPI       Details the mysqlx module as well as the capabilities of the
+                  X DevAPI which enable working with MySQL as a Document Store
+
+The available topics include:
+
+- The dba global object and the classes available at the AdminAPI.
+- The mysqlx module and the classes available at the X DevAPI.
+- The mysql module and the global objects and classes available at the
+  ShellAPI.
+- The functions and properties of the classes exposed by the APIs.
+- The available shell commands.
+- Any word that is part of an SQL statement.
+- Command Line - invoking built-in shell functions without entering interactive
+  mode.
+
+SHELL COMMANDS
+
+The shell commands allow executing specific operations including updating the
+shell configuration.
+
+The following shell commands are available:
+
+ - \                   Start multi-line input when in SQL mode.
+ - \connect    (\c)    Connects the shell to a MySQL server and assigns the
+                       global session.
+ - \disconnect         Disconnects the global session.
+ - \edit       (\e)    Launch a system editor to edit a command to be executed.
+ - \exit               Exits the MySQL Shell, same as \quit.
+ - \help       (\?,\h) Prints help information about a specific topic.
+ - \history            View and edit command line history.
+ - \js                 Switches to JavaScript processing mode.
+ - \nopager            Disables the current pager.
+ - \nowarnings (\w)    Don't show warnings after every statement.
+ - \option             Allows working with the available shell options.
+ - \pager      (\P)    Sets the current pager.
+ - \py                 Switches to Python processing mode.
+ - \quit       (\q)    Exits the MySQL Shell.
+ - \reconnect          Reconnects the global session.
+ - \rehash             Refresh the autocompletion cache.
+ - \show               Executes the given report with provided options and
+                       arguments.
+ - \source     (\.)    Loads and executes a script from a file.
+ - \sql                Executes SQL statement or switches to SQL processing
+                       mode when no statement is given.
+ - \status     (\s)    Print information about the current global session.
+ - \system     (\!)    Execute a system shell command.
+ - \use        (\u)    Sets the active schema.
+ - \warnings   (\W)    Show warnings after every statement.
+ - \watch              Executes the given report with provided options and
+                       arguments in a loop.
+
+GLOBAL OBJECTS
+
+The following modules and objects are ready for use when the shell starts:
+
+ - dba     Used for InnoDB Cluster, ReplicaSet, and ClusterSet administration.
+ - mysql   Support for connecting to MySQL servers using the classic MySQL
+           protocol.
+ - mysqlx  Used to work with X Protocol sessions using the MySQL X DevAPI.
+ - os      Gives access to functions which allow to interact with the operating
+           system.
+ - plugins Plugin to manage MySQL Shell plugins
+ - shell   Gives access to general purpose functions and properties.
+ - sys     Gives access to system specific parameters.
+ - util    Global object that groups miscellaneous tools like upgrade checker
+           and JSON import.
+
+For additional information on these global objects use: <object>.help()
+
+EXAMPLES
+\? AdminAPI
+      Displays information about the AdminAPI.
+
+\? \connect
+      Displays usage details for the \connect command.
+
+\? checkInstanceConfiguration
+      Displays usage details for the dba.checkInstanceConfiguration function.
+
+\? sql syntax
+      Displays the main SQL help categories.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+
+02/02/2023
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 9
+Server version: 8.0.31 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| bdpendientes       |
+| hikvision          |
+| information_schema |
+| mysql              |
+| peliculas          |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.0017 sec)
+ MySQL  localhost:3306 ssl  SQL > use hikvision;
+Default schema set to `hikvision`.
+Fetching global names, object names from `hikvision` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  hikvision  SQL > show tables;
++---------------------+
+| Tables_in_hikvision |
++---------------------+
+| alumnos             |
+| maestros            |
+| usuarios            |
++---------------------+
+3 rows in set (0.0026 sec)
+ MySQL  localhost:3306 ssl  hikvision  SQL > desc usuarios;
++------------+------+------+-----+---------+-------+
+| Field      | Type | Null | Key | Default | Extra |
++------------+------+------+-----+---------+-------+
+| idUsuarios | int  | NO   | PRI | NULL    |       |
+| idMaestros | int  | YES  |     | NULL    |       |
+| idAlumnos  | int  | YES  |     | NULL    |       |
++------------+------+------+-----+---------+-------+
+3 rows in set (0.0446 sec)
+
+07/02/23
+ MySQL  localhost:3306 ssl  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| bdpendientes       |
+| hikvision          |
+| information_schema |
+| mysql              |
+| peliculas          |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.1127 sec)
+ MySQL  localhost:3306 ssl  SQL > create database evaluacion_1;
+Query OK, 1 row affected (0.2215 sec)
+ MySQL  localhost:3306 ssl  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| bdpendientes       |
+| evaluacion_1       |
+| hikvision          |
+| information_schema |
+| mysql              |
+| peliculas          |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+10 rows in set (0.0024 sec)
+ MySQL  localhost:3306 ssl  SQL > create database if not exist evaluacion_1;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'exist evaluacion_1' at line 1
+ MySQL  localhost:3306 ssl  SQL > create database if not exists evaluacion_1;
+Query OK, 1 row affected, 1 warning (0.1663 sec)
+Note (code 1007): Can't create database 'evaluacion_1'; database exists
+ MySQL  localhost:3306 ssl  SQL > ^C
+ MySQL  localhost:3306 ssl  SQL > \use evaluacion_1
+Default schema set to `evaluacion_1`.
+Fetching global names, object names from `evaluacion_1` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > show tables;
+Empty set (0.0439 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > drop database evaluacion_1;
+Query OK, 0 rows affected (0.0799 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > show tables;
+ERROR: 1046 (3D000): No database selected
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > \use world
+Default schema set to `world`.
+Fetching global names, object names from `world` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  world  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| bdpendientes       |
+| hikvision          |
+| information_schema |
+| mysql              |
+| peliculas          |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  world  SQL > create database evaluacion_1;
+Query OK, 1 row affected (0.0684 sec)
+ MySQL  localhost:3306 ssl  world  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| bdpendientes       |
+| evaluacion_1       |
+| hikvision          |
+| information_schema |
+| mysql              |
+| peliculas          |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+10 rows in set (0.0019 sec)
+ MySQL  localhost:3306 ssl  world  SQL > \use evaluacion_1
+Default schema set to `evaluacion_1`.
+Fetching global names, object names from `evaluacion_1` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > show tables;
+Empty set (0.0028 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > create table primer_tabla
+                                             -> (
+                                             -> id int,
+                                             -> nombre varchar(50));
+Query OK, 0 rows affected (0.2054 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > show tables;
++------------------------+
+| Tables_in_evaluacion_1 |
++------------------------+
+| primer_tabla           |
++------------------------+
+1 row in set (0.0026 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL > desc primer_tabla
+                                             -> ;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | YES  |     | NULL    |       |
+| nombre | varchar(50) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.0041 sec)
+ MySQL  localhost:3306 ssl  evaluacion_1  SQL >
