@@ -1,0 +1,888 @@
+MySQL Shell 8.0.31
+
+Copyright (c) 2016, 2022, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 8
+Server version: 8.0.31 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > use eva_2;
+Default schema set to `eva_2`.
+Fetching global names, object names from `eva_2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  eva_2  SQL > show tables;
++-----------------+
+| Tables_in_eva_2 |
++-----------------+
+| contacts        |
+| detalle         |
+| detalle_factura |
+| factura         |
+| maestro         |
+| phones          |
+| tablaa          |
+| tablab          |
++-----------------+
+8 rows in set (0.0466 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > show create table tablaa;
++--------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table  | Create Table                                                                                                                                            |
++--------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| tablaa | CREATE TABLE `tablaa` (
+  `id` int DEFAULT NULL,
+  `nombre` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++--------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0752 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > show create table tablab
+                                      -> ;
++--------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table  | Create Table                                                                                                                                            |
++--------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+| tablab | CREATE TABLE `tablab` (
+  `id` int DEFAULT NULL,
+  `nombre` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++--------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0040 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > insert * from tablaa
+                                      -> concact
+                                      -> insert * from tablab
+                                      -> ;;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* from tablaa
+concact
+insert * from tablab' at line 1
+ERROR: 1065 (42000): Query was empty
+ MySQL  localhost:3306 ssl  eva_2  SQL > insert * from tablaa concact insert * from tablab ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* from tablaa concact insert * from tablab' at line 1
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tablaa concact select * from tablab ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from tablab' at line 1
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tablaa union select * from tablab ;
++----+--------+
+| id | nombre |
++----+--------+
+|  1 | A      |
+|  2 | B      |
+|  3 | C      |
+|  4 | D      |
+|  1 | X      |
+|  2 | Y      |
+|  3 | Z      |
+|  4 | A      |
+|  5 | B      |
++----+--------+
+9 rows in set (0.0811 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tablaa concact select * from tablab ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from tablab' at line 1
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tablaa, tablab;
++----+--------+----+--------+
+| id | nombre | id | nombre |
++----+--------+----+--------+
+|  4 | D      |  1 | X      |
+|  3 | C      |  1 | X      |
+|  2 | B      |  1 | X      |
+|  1 | A      |  1 | X      |
+|  4 | D      |  2 | Y      |
+|  3 | C      |  2 | Y      |
+|  2 | B      |  2 | Y      |
+|  1 | A      |  2 | Y      |
+|  4 | D      |  3 | Z      |
+|  3 | C      |  3 | Z      |
+|  2 | B      |  3 | Z      |
+|  1 | A      |  3 | Z      |
+|  4 | D      |  4 | A      |
+|  3 | C      |  4 | A      |
+|  2 | B      |  4 | A      |
+|  1 | A      |  4 | A      |
+|  4 | D      |  5 | B      |
+|  3 | C      |  5 | B      |
+|  2 | B      |  5 | B      |
+|  1 | A      |  5 | B      |
++----+--------+----+--------+
+20 rows in set (0.0016 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tabla_a, tabla_b order by tabla_a.nombre;
+ERROR: 1146 (42S02): Table 'eva_2.tabla_a' doesn't exist
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tablaa, tablab order by tablaa.nombre;
++----+--------+----+--------+
+| id | nombre | id | nombre |
++----+--------+----+--------+
+|  1 | A      |  1 | X      |
+|  1 | A      |  2 | Y      |
+|  1 | A      |  3 | Z      |
+|  1 | A      |  4 | A      |
+|  1 | A      |  5 | B      |
+|  2 | B      |  1 | X      |
+|  2 | B      |  2 | Y      |
+|  2 | B      |  3 | Z      |
+|  2 | B      |  4 | A      |
+|  2 | B      |  5 | B      |
+|  3 | C      |  1 | X      |
+|  3 | C      |  2 | Y      |
+|  3 | C      |  3 | Z      |
+|  3 | C      |  4 | A      |
+|  3 | C      |  5 | B      |
+|  4 | D      |  1 | X      |
+|  4 | D      |  2 | Y      |
+|  4 | D      |  3 | Z      |
+|  4 | D      |  4 | A      |
+|  4 | D      |  5 | B      |
++----+--------+----+--------+
+20 rows in set (0.0304 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > select tablaa.nombre, tablab.nombre from  tablaa, tablab order by tablaa.nombre
+                                      -> ;
++--------+--------+
+| nombre | nombre |
++--------+--------+
+| A      | X      |
+| A      | Y      |
+| A      | Z      |
+| A      | A      |
+| A      | B      |
+| B      | X      |
+| B      | Y      |
+| B      | Z      |
+| B      | A      |
+| B      | B      |
+| C      | X      |
+| C      | Y      |
+| C      | Z      |
+| C      | A      |
+| C      | B      |
+| D      | X      |
+| D      | Y      |
+| D      | Z      |
+| D      | A      |
+| D      | B      |
++--------+--------+
+20 rows in set (0.0014 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > use sakila;
+Default schema set to `sakila`.
+Fetching global names, object names from `sakila` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  sakila  SQL > select distinct(first_name) from customer
+                                       ->                                          -> union
+                                       ->                                          -> select distinct(first_name) from actor;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> union
+                                         -> select distinct(first_name)' at line 2
+ MySQL  localhost:3306 ssl  sakila  SQL > select distinct(first_name) from customer
+                                       -> union
+                                       -> select distinct(first_name) from actor;
++-------------+
+| first_name  |
++-------------+
+| MARY        |
+| PATRICIA    |
+| LINDA       |
+| BARBARA     |
+| ELIZABETH   |
+| JENNIFER    |
+| MARIA       |
+| SUSAN       |
+| MARGARET    |
+| DOROTHY     |
+| LISA        |
+| NANCY       |
+| KAREN       |
+| BETTY       |
+| HELEN       |
+| SANDRA      |
+| DONNA       |
+| CAROL       |
+| RUTH        |
+| SHARON      |
+| MICHELLE    |
+| LAURA       |
+| SARAH       |
+| KIMBERLY    |
+| DEBORAH     |
+| JESSICA     |
+| SHIRLEY     |
+| CYNTHIA     |
+| ANGELA      |
+| MELISSA     |
+| BRENDA      |
+| AMY         |
+| ANNA        |
+| REBECCA     |
+| VIRGINIA    |
+| KATHLEEN    |
+| PAMELA      |
+| MARTHA      |
+| DEBRA       |
+| AMANDA      |
+| STEPHANIE   |
+| CAROLYN     |
+| CHRISTINE   |
+| MARIE       |
+| JANET       |
+| CATHERINE   |
+| FRANCES     |
+| ANN         |
+| JOYCE       |
+| DIANE       |
+| ALICE       |
+| JULIE       |
+| HEATHER     |
+| TERESA      |
+| DORIS       |
+| GLORIA      |
+| EVELYN      |
+| JEAN        |
+| CHERYL      |
+| MILDRED     |
+| KATHERINE   |
+| JOAN        |
+| ASHLEY      |
+| JUDITH      |
+| ROSE        |
+| JANICE      |
+| KELLY       |
+| NICOLE      |
+| JUDY        |
+| CHRISTINA   |
+| KATHY       |
+| THERESA     |
+| BEVERLY     |
+| DENISE      |
+| TAMMY       |
+| IRENE       |
+| JANE        |
+| LORI        |
+| RACHEL      |
+| MARILYN     |
+| ANDREA      |
+| KATHRYN     |
+| LOUISE      |
+| SARA        |
+| ANNE        |
+| JACQUELINE  |
+| WANDA       |
+| BONNIE      |
+| JULIA       |
+| RUBY        |
+| LOIS        |
+| TINA        |
+| PHYLLIS     |
+| NORMA       |
+| PAULA       |
+| DIANA       |
+| ANNIE       |
+| LILLIAN     |
+| EMILY       |
+| ROBIN       |
+| PEGGY       |
+| CRYSTAL     |
+| GLADYS      |
+| RITA        |
+| DAWN        |
+| CONNIE      |
+| FLORENCE    |
+| TRACY       |
+| EDNA        |
+| TIFFANY     |
+| CARMEN      |
+| ROSA        |
+| CINDY       |
+| GRACE       |
+| WENDY       |
+| VICTORIA    |
+| EDITH       |
+| KIM         |
+| SHERRY      |
+| SYLVIA      |
+| JOSEPHINE   |
+| THELMA      |
+| SHANNON     |
+| SHEILA      |
+| ETHEL       |
+| ELLEN       |
+| ELAINE      |
+| MARJORIE    |
+| CARRIE      |
+| CHARLOTTE   |
+| MONICA      |
+| ESTHER      |
+| PAULINE     |
+| EMMA        |
+| JUANITA     |
+| ANITA       |
+| RHONDA      |
+| HAZEL       |
+| AMBER       |
+| EVA         |
+| DEBBIE      |
+| APRIL       |
+| LESLIE      |
+| CLARA       |
+| LUCILLE     |
+| JAMIE       |
+| JOANNE      |
+| ELEANOR     |
+| VALERIE     |
+| DANIELLE    |
+| MEGAN       |
+| ALICIA      |
+| SUZANNE     |
+| MICHELE     |
+| GAIL        |
+| BERTHA      |
+| DARLENE     |
+| VERONICA    |
+| JILL        |
+| ERIN        |
+| GERALDINE   |
+| LAUREN      |
+| CATHY       |
+| JOANN       |
+| LORRAINE    |
+| LYNN        |
+| SALLY       |
+| REGINA      |
+| ERICA       |
+| BEATRICE    |
+| DOLORES     |
+| BERNICE     |
+| AUDREY      |
+| YVONNE      |
+| ANNETTE     |
+| JUNE        |
+| SAMANTHA    |
+| MARION      |
+| DANA        |
+| STACY       |
+| ANA         |
+| RENEE       |
+| IDA         |
+| VIVIAN      |
+| ROBERTA     |
+| HOLLY       |
+| BRITTANY    |
+| MELANIE     |
+| LORETTA     |
+| YOLANDA     |
+| JEANETTE    |
+| LAURIE      |
+| KATIE       |
+| KRISTEN     |
+| VANESSA     |
+| ALMA        |
+| SUE         |
+| ELSIE       |
+| BETH        |
+| JEANNE      |
+| VICKI       |
+| CARLA       |
+| TARA        |
+| ROSEMARY    |
+| EILEEN      |
+| TERRI       |
+| GERTRUDE    |
+| LUCY        |
+| TONYA       |
+| ELLA        |
+| STACEY      |
+| WILMA       |
+| GINA        |
+| KRISTIN     |
+| JESSIE      |
+| NATALIE     |
+| AGNES       |
+| VERA        |
+| WILLIE      |
+| CHARLENE    |
+| BESSIE      |
+| DELORES     |
+| MELINDA     |
+| PEARL       |
+| ARLENE      |
+| MAUREEN     |
+| COLLEEN     |
+| ALLISON     |
+| TAMARA      |
+| JOY         |
+| GEORGIA     |
+| CONSTANCE   |
+| LILLIE      |
+| CLAUDIA     |
+| JACKIE      |
+| MARCIA      |
+| TANYA       |
+| NELLIE      |
+| MINNIE      |
+| MARLENE     |
+| HEIDI       |
+| GLENDA      |
+| LYDIA       |
+| VIOLA       |
+| COURTNEY    |
+| MARIAN      |
+| STELLA      |
+| CAROLINE    |
+| DORA        |
+| JO          |
+| VICKIE      |
+| MATTIE      |
+| TERRY       |
+| MAXINE      |
+| IRMA        |
+| MABEL       |
+| MARSHA      |
+| MYRTLE      |
+| LENA        |
+| CHRISTY     |
+| DEANNA      |
+| PATSY       |
+| HILDA       |
+| GWENDOLYN   |
+| JENNIE      |
+| NORA        |
+| MARGIE      |
+| NINA        |
+| CASSANDRA   |
+| LEAH        |
+| PENNY       |
+| KAY         |
+| PRISCILLA   |
+| NAOMI       |
+| CAROLE      |
+| BRANDY      |
+| OLGA        |
+| BILLIE      |
+| DIANNE      |
+| TRACEY      |
+| LEONA       |
+| JENNY       |
+| FELICIA     |
+| SONIA       |
+| MIRIAM      |
+| VELMA       |
+| BECKY       |
+| BOBBIE      |
+| VIOLET      |
+| KRISTINA    |
+| TONI        |
+| MISTY       |
+| MAE         |
+| SHELLY      |
+| DAISY       |
+| RAMONA      |
+| SHERRI      |
+| ERIKA       |
+| JAMES       |
+| JOHN        |
+| ROBERT      |
+| MICHAEL     |
+| WILLIAM     |
+| DAVID       |
+| RICHARD     |
+| CHARLES     |
+| JOSEPH      |
+| THOMAS      |
+| CHRISTOPHER |
+| DANIEL      |
+| PAUL        |
+| MARK        |
+| DONALD      |
+| GEORGE      |
+| KENNETH     |
+| STEVEN      |
+| EDWARD      |
+| BRIAN       |
+| RONALD      |
+| ANTHONY     |
+| KEVIN       |
+| JASON       |
+| MATTHEW     |
+| GARY        |
+| TIMOTHY     |
+| JOSE        |
+| LARRY       |
+| JEFFREY     |
+| FRANK       |
+| SCOTT       |
+| ERIC        |
+| STEPHEN     |
+| ANDREW      |
+| RAYMOND     |
+| GREGORY     |
+| JOSHUA      |
+| JERRY       |
+| DENNIS      |
+| WALTER      |
+| PATRICK     |
+| PETER       |
+| HAROLD      |
+| DOUGLAS     |
+| HENRY       |
+| CARL        |
+| ARTHUR      |
+| RYAN        |
+| ROGER       |
+| JOE         |
+| JUAN        |
+| JACK        |
+| ALBERT      |
+| JONATHAN    |
+| JUSTIN      |
+| GERALD      |
+| KEITH       |
+| SAMUEL      |
+| RALPH       |
+| LAWRENCE    |
+| NICHOLAS    |
+| ROY         |
+| BENJAMIN    |
+| BRUCE       |
+| BRANDON     |
+| ADAM        |
+| HARRY       |
+| FRED        |
+| WAYNE       |
+| BILLY       |
+| STEVE       |
+| LOUIS       |
+| JEREMY      |
+| AARON       |
+| RANDY       |
+| HOWARD      |
+| EUGENE      |
+| CARLOS      |
+| RUSSELL     |
+| BOBBY       |
+| VICTOR      |
+| MARTIN      |
+| ERNEST      |
+| PHILLIP     |
+| TODD        |
+| JESSE       |
+| CRAIG       |
+| ALAN        |
+| SHAWN       |
+| CLARENCE    |
+| SEAN        |
+| PHILIP      |
+| CHRIS       |
+| JOHNNY      |
+| EARL        |
+| JIMMY       |
+| ANTONIO     |
+| DANNY       |
+| BRYAN       |
+| TONY        |
+| LUIS        |
+| MIKE        |
+| STANLEY     |
+| LEONARD     |
+| NATHAN      |
+| DALE        |
+| MANUEL      |
+| RODNEY      |
+| CURTIS      |
+| NORMAN      |
+| ALLEN       |
+| MARVIN      |
+| VINCENT     |
+| GLENN       |
+| JEFFERY     |
+| TRAVIS      |
+| JEFF        |
+| CHAD        |
+| JACOB       |
+| LEE         |
+| MELVIN      |
+| ALFRED      |
+| KYLE        |
+| FRANCIS     |
+| BRADLEY     |
+| JESUS       |
+| HERBERT     |
+| FREDERICK   |
+| RAY         |
+| JOEL        |
+| EDWIN       |
+| DON         |
+| EDDIE       |
+| RICKY       |
+| TROY        |
+| RANDALL     |
+| BARRY       |
+| ALEXANDER   |
+| BERNARD     |
+| MARIO       |
+| LEROY       |
+| FRANCISCO   |
+| MARCUS      |
+| MICHEAL     |
+| THEODORE    |
+| CLIFFORD    |
+| MIGUEL      |
+| OSCAR       |
+| JAY         |
+| JIM         |
+| TOM         |
+| CALVIN      |
+| ALEX        |
+| JON         |
+| RONNIE      |
+| BILL        |
+| LLOYD       |
+| TOMMY       |
+| LEON        |
+| DEREK       |
+| WARREN      |
+| DARRELL     |
+| JEROME      |
+| FLOYD       |
+| LEO         |
+| ALVIN       |
+| TIM         |
+| WESLEY      |
+| GORDON      |
+| DEAN        |
+| GREG        |
+| JORGE       |
+| DUSTIN      |
+| PEDRO       |
+| DERRICK     |
+| DAN         |
+| LEWIS       |
+| ZACHARY     |
+| COREY       |
+| HERMAN      |
+| MAURICE     |
+| VERNON      |
+| ROBERTO     |
+| CLYDE       |
+| GLEN        |
+| HECTOR      |
+| SHANE       |
+| RICARDO     |
+| SAM         |
+| RICK        |
+| LESTER      |
+| BRENT       |
+| RAMON       |
+| CHARLIE     |
+| TYLER       |
+| GILBERT     |
+| GENE        |
+| MARC        |
+| REGINALD    |
+| RUBEN       |
+| BRETT       |
+| ANGEL       |
+| NATHANIEL   |
+| RAFAEL      |
+| EDGAR       |
+| MILTON      |
+| RAUL        |
+| BEN         |
+| CHESTER     |
+| CECIL       |
+| DUANE       |
+| FRANKLIN    |
+| ANDRE       |
+| ELMER       |
+| BRAD        |
+| GABRIEL     |
+| RON         |
+| MITCHELL    |
+| ROLAND      |
+| ARNOLD      |
+| HARVEY      |
+| JARED       |
+| ADRIAN      |
+| KARL        |
+| CORY        |
+| CLAUDE      |
+| ERIK        |
+| DARRYL      |
+| NEIL        |
+| CHRISTIAN   |
+| JAVIER      |
+| FERNANDO    |
+| CLINTON     |
+| TED         |
+| MATHEW      |
+| TYRONE      |
+| DARREN      |
+| LONNIE      |
+| LANCE       |
+| CODY        |
+| JULIO       |
+| KURT        |
+| ALLAN       |
+| NELSON      |
+| GUY         |
+| CLAYTON     |
+| HUGH        |
+| MAX         |
+| DWAYNE      |
+| DWIGHT      |
+| ARMANDO     |
+| FELIX       |
+| JIMMIE      |
+| EVERETT     |
+| JORDAN      |
+| IAN         |
+| WALLACE     |
+| KEN         |
+| BOB         |
+| JAIME       |
+| CASEY       |
+| ALFREDO     |
+| ALBERTO     |
+| DAVE        |
+| IVAN        |
+| JOHNNIE     |
+| SIDNEY      |
+| BYRON       |
+| JULIAN      |
+| ISAAC       |
+| MORRIS      |
+| CLIFTON     |
+| WILLARD     |
+| DARYL       |
+| ROSS        |
+| VIRGIL      |
+| ANDY        |
+| MARSHALL    |
+| SALVADOR    |
+| PERRY       |
+| KIRK        |
+| SERGIO      |
+| SETH        |
+| KENT        |
+| TERRANCE    |
+| RENE        |
+| EDUARDO     |
+| TERRENCE    |
+| ENRIQUE     |
+| FREDDIE     |
+| WADE        |
+| AUSTIN      |
+| PENELOPE    |
+| NICK        |
+| ED          |
+| BETTE       |
+| ZERO        |
+| UMA         |
+| VIVIEN      |
+| CUBA        |
+| KIRSTEN     |
+| ELVIS       |
+| CAMERON     |
+| RIP         |
+| WOODY       |
+| ALEC        |
+| SISSY       |
+| MILLA       |
+| BURT        |
+| VAL         |
+| GOLDIE      |
+| JODIE       |
+| REESE       |
+| PARKER      |
+| MENA        |
+| FAY         |
+| JUDE        |
+| JAYNE       |
+| ANGELINA    |
+| CARY        |
+| GROUCHO     |
+| SCARLETT    |
+| SPENCER     |
+| CHARLIZE    |
+| MEG         |
+| SYLVESTER   |
+| MORGAN      |
+| HARRISON    |
+| LIZA        |
+| SALMA       |
+| JULIANNE    |
+| CATE        |
+| GRETA       |
+| EWAN        |
+| WHOOPI      |
+| JADA        |
+| RIVER       |
+| GEOFFREY    |
+| MERYL       |
+| OPRAH       |
+| HUMPHREY    |
+| AL          |
+| LAURENCE    |
+| WILL        |
+| OLYMPIA     |
+| ROCK        |
+| BELA        |
+| THORA       |
++-------------+
+647 rows in set (0.2032 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > use eva_2;
+Default schema set to `eva_2`.
+Fetching global names, object names from `eva_2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tablaa
+                                      -> intersect
+                                      -> select * from tablab;
+Empty set (0.0012 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tablaa;
++----+--------+
+| id | nombre |
++----+--------+
+|  1 | A      |
+|  2 | B      |
+|  3 | C      |
+|  4 | D      |
++----+--------+
+4 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tablab;
++----+--------+
+| id | nombre |
++----+--------+
+|  1 | X      |
+|  2 | Y      |
+|  3 | Z      |
+|  4 | A      |
+|  5 | B      |
++----+--------+
+5 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tablaa intersect select * from tablab;
+Empty set (0.0011 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > select nombre from tablaa intersect select nombre from tablab;
++--------+
+| nombre |
++--------+
+| A      |
+| B      |
++--------+
+2 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tablaa where nombre in(select nombre from tablab);
++----+--------+
+| id | nombre |
++----+--------+
+|  1 | A      |
+|  2 | B      |
++----+--------+
+2 rows in set (0.0013 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tablaa where nombre in(select distinct(nombre) from tablab);
++----+--------+
+| id | nombre |
++----+--------+
+|  1 | A      |
+|  2 | B      |
++----+--------+
+2 rows in set (0.0026 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from tablaa where nombre not in(select distinct(nombre) from tablab);
++----+--------+
+| id | nombre |
++----+--------+
+|  3 | C      |
+|  4 | D      |
++----+--------+
+2 rows in set (0.0380 sec)
