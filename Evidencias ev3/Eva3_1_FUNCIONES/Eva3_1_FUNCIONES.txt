@@ -1,0 +1,77 @@
+MySQL Shell 8.0.31
+
+Copyright (c) 2016, 2022, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 12
+Server version: 8.0.31 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > use eva_3;
+Default schema set to `eva_3`.
+Fetching global names, object names from `eva_3` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  eva_3  SQL > select regresa_uno();
+ERROR: 1305 (42000): FUNCTION eva_3.regresa_uno does not exist
+ MySQL  localhost:3306 ssl  eva_3  SQL > select regresa_uno();
+ERROR: 1305 (42000): FUNCTION eva_3.regresa_uno does not exist
+ MySQL  localhost:3306 ssl  eva_3  SQL > select regresa_uno();
++---------------+
+| regresa_uno() |
++---------------+
+|             1 |
++---------------+
+1 row in set (0.0031 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > select regresa_cadena();
+ERROR: 1305 (42000): FUNCTION eva_3.regresa_cadena does not exist
+ MySQL  localhost:3306 ssl  eva_3  SQL > select regresa_mensaje();
+ERROR: 1318 (42000): Incorrect number of arguments for FUNCTION eva_3.regresa_mensaje; expected 1, got 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > select regresa_mensaje("Keza");
++-------------------------+
+| regresa_mensaje("Keza") |
++-------------------------+
+| holaKeza                |
++-------------------------+
+1 row in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > select regresa_mensaje(" Keza") as mensaje;
++-----------+
+| mensaje   |
++-----------+
+| hola Keza |
++-----------+
+1 row in set (0.0014 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > create table actor select * from sakila.actor;
+Query OK, 200 rows affected (0.6407 sec)
+
+Records: 200  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > desc actor;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| actor_id    | smallint unsigned | NO   |     | 0                 |                                               |
+| first_name  | varchar(45)       | NO   |     | NULL              |                                               |
+| last_name   | varchar(45)       | NO   |     | NULL              |                                               |
+| last_update | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+4 rows in set (0.0425 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > slect count(*) from actor;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'slect count(*) from actor' at line 1
+ MySQL  localhost:3306 ssl  eva_3  SQL > select count(*) from actor;
++----------+
+| count(*) |
++----------+
+|      200 |
++----------+
+1 row in set (0.0819 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > select contar_actor();
++----------------+
+| contar_actor() |
++----------------+
+|            200 |
++----------------+
+1 row in set (0.0345 sec)
