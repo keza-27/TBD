@@ -1,0 +1,86 @@
+MySQL Shell 8.0.31
+
+Copyright (c) 2016, 2022, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 10
+Server version: 8.0.31 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > use eva_3;
+Default schema set to `eva_3`.
+Fetching global names, object names from `eva_3` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  eva_3  SQL > show tables;
++-----------------+
+| Tables_in_eva_3 |
++-----------------+
+| actor           |
++-----------------+
+1 row in set (0.0031 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > create table personas(
+                                      -> id int key auto_increment,
+                                      -> nombre varchar(25) not null,
+                                      -> apellido_pat varchar(25) not null,
+                                      -> apellido_mat varchar(25),
+                                      -> fecha_nac date not null,
+                                      -> clave_rfc varchar(13));
+Query OK, 0 rows affected (0.2095 sec)
+
+Records: 9  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > insert into personas (nombre, apellido_pat, apellido_mat, fecha_nac) values
+                                      -> ('erick', 'pérez', 'lozano', '2001-05-24'),
+                                      -> ('marco','polo','moro','2000-12-01'),
+                                      -> ('daniela', 'martinez', 'zapata', '2002-01-15'),
+                                      -> ('paolina', 'gutierrez', 'gutierrito', '2001-07-31'),
+                                      -> ('javier', 'lopez', 'manolo', '1999-10-31'),
+                                      -> ('yolanda', 'lozano', 'aranda', '2002-01-03'),
+                                      -> ('rodrigo', 'pérez', 'rivero', '2000-03-08'),
+                                      -> ('yuliza', 'ixtchel', 'gomez', '2001-11-02'),
+                                      -> ('sarah', 'maxine', 'ponce', '2000-12-30');
+Query OK, 9 rows affected (0.1248 sec)
+
+Records: 9  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > insert into personas (nombre, apellido_pat, fecha_nac) values ('tony', 'stark', '1975-08-29');
+Query OK, 1 row affected (0.1375 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+---------+--------------+--------------+------------+-----------+
+| id | nombre  | apellido_pat | apellido_mat | fecha_nac  | clave_rfc |
++----+---------+--------------+--------------+------------+-----------+
+|  1 | erick   | pérez        | lozano       | 2001-05-24 | NULL      |
+|  2 | marco   | polo         | moro         | 2000-12-01 | NULL      |
+|  3 | daniela | martinez     | zapata       | 2002-01-15 | NULL      |
+|  4 | paolina | gutierrez    | gutierrito   | 2001-07-31 | NULL      |
+|  5 | javier  | lopez        | manolo       | 1999-10-31 | NULL      |
+|  6 | yolanda | lozano       | aranda       | 2002-01-03 | NULL      |
+|  7 | rodrigo | pérez        | rivero       | 2000-03-08 | NULL      |
+|  8 | yuliza  | ixtchel      | gomez        | 2001-11-02 | NULL      |
+|  9 | sarah   | maxine       | ponce        | 2000-12-30 | NULL      |
+| 10 | tony    | stark        | NULL         | 1975-08-29 | NULL      |
++----+---------+--------------+--------------+------------+-----------+
+10 rows in set (0.0016 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > update personas set clave_rfc = generar_rfc(apellido_pat, apellido_mat, nombre, fecha_nac);
+Query OK, 10 rows affected (0.0917 sec)
+
+Rows matched: 10  Changed: 10  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+---------+--------------+--------------+------------+--------------+
+| id | nombre  | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+---------+--------------+--------------+------------+--------------+
+|  1 | erick   | pérez        | lozano       | 2001-05-24 | péle20010524 |
+|  2 | marco   | polo         | moro         | 2000-12-01 | pomm20001201 |
+|  3 | daniela | martinez     | zapata       | 2002-01-15 | mazd20020115 |
+|  4 | paolina | gutierrez    | gutierrito   | 2001-07-31 | gugp20010731 |
+|  5 | javier  | lopez        | manolo       | 1999-10-31 | lomj19991031 |
+|  6 | yolanda | lozano       | aranda       | 2002-01-03 | loay20020103 |
+|  7 | rodrigo | pérez        | rivero       | 2000-03-08 | pérr20000308 |
+|  8 | yuliza  | ixtchel      | gomez        | 2001-11-02 | ixgy20011102 |
+|  9 | sarah   | maxine       | ponce        | 2000-12-30 | maps20001230 |
+| 10 | tony    | stark        | NULL         | 1975-08-29 | stXt19750829 |
++----+---------+--------------+--------------+------------+--------------+
+10 rows in set (0.0010 sec)
